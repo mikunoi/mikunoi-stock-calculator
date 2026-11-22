@@ -14,7 +14,7 @@ with TemporaryDirectory() as directory:
     payload = Path(directory) / 'payload.zip'
     with ZipFile(runtime) as environment, ZipFile(payload, 'w', ZIP_DEFLATED, compresslevel=2) as archive:
         for member in environment.infolist():
-            if not member.is_dir():
+            if not member.is_dir() and member.filename != 'lib/terminfo':
                 actual = member
                 for _ in range(16):
                     if not stat.S_ISLNK(actual.external_attr >> 16):
